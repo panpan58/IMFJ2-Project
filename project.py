@@ -29,7 +29,7 @@ def Messages(situation):
         print("Or type 'help' for the list of commands.")
 
 
-def Draw (velocity, angle, gravity, initX, initY, drawn):
+def Draw (velocity, angle, gravity, initX, initY, drawn, arrayX, arrayY):
     inAir = 0.0  
     BLACK = (0 , 0, 0)
     WHITE = (255, 255, 255)
@@ -39,15 +39,21 @@ def Draw (velocity, angle, gravity, initX, initY, drawn):
     pygame.draw.line(screen, WHITE, (10, 350),(630, 350,), 1)
 
     while(drawn == False):
+
         velocityX = velocity*(math.cos(math.radians(angle)))
         velocityY = velocity*(math.sin(math.radians(angle)))
+
+        for i in range(len(arrayX)):
+            velocityX = velocityX + arrayX[i]
+            velocityY = velocityY + arrayY[i]
+            
         inAir = inAir + 0.001
 
         posX = initX + (velocityX * inAir)
         posY = initY - (velocityY * inAir) - ((1/2)*gravity*inAir**2)
         pygame.draw.circle(screen, WHITE, (int(posX), int(posY)),int(0.5))
 
-        if(posY >= 350):
+        if(posY >= 350 or posX >= 640):
             drawn = True
     pygame.display.flip()
 
@@ -89,7 +95,7 @@ while(True):
 
 
     #Print the trajectory
-    Draw(velocity, angle, gravity, initX, initY, drawn)
+    Draw(velocity, angle, gravity, initX, initY, drawn, arrayX, arrayY)
 
     #Command the user inputs
     user_input = input().split(' ')
