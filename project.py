@@ -24,6 +24,7 @@ def Messages(situation):
     if (situation == 5):
         print("To see a list of current External Forces Type 'forces'")
         print("To remove an external force type 'removeforce <force list position>'")
+        print("To leave the application type 'exit'.")
     
     else: 
         print("Or type 'help' for the list of commands.")
@@ -98,10 +99,16 @@ while(True):
     Draw(velocity, angle, gravity, initX, initY, drawn, arrayX, arrayY)
 
     #Command the user inputs
-    user_input = input().split(' ')
+    original_input = input()
+ 
+    #Leave the aplication
+    if(original_input == "exit"):
+        exit()
+
 
     #Verifies which command the user inputs and if it is correct
     try:
+        user_input = original_input.split(' ')
         if(user_input[0] == "set"):
             if(user_input[1] == "velocity"):
                 velocity = float(user_input[2])
@@ -133,11 +140,9 @@ while(True):
 
         elif(user_input[0] == "help"):
             Messages(5)
+
         else:
             Messages(0)
+
     except:
         Messages(0)
-        
-
-
- 
