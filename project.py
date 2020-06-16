@@ -30,7 +30,7 @@ def Messages(situation):
         print("Or type 'help' for the list of commands.")
 
 
-def Draw (velocity, angle, gravity, initX, initY, drawn, arrayX, arrayY):
+def Draw (velocity, angle, gravity, initX, initY, drawn, arrayX, arrayY, mass, viscosity):
     inAir = 0.0  
     BLACK = (0 , 0, 0)
     WHITE = (255, 255, 255)
@@ -45,8 +45,8 @@ def Draw (velocity, angle, gravity, initX, initY, drawn, arrayX, arrayY):
         velocityY = velocity*(math.sin(math.radians(angle)))
 
         for i in range(len(arrayX)):
-            velocityX = velocityX + arrayX[i]
-            velocityY = velocityY + arrayY[i]
+            velocityX = velocityX + (arrayX[i]/mass)
+            velocityY = velocityY + (arrayY[i]/mass)
             
         inAir = inAir + 0.001
 
@@ -75,6 +75,7 @@ angle = 45
 initX = 10
 initY = 350
 viscosity = 1
+mass = 1
 arrayX = []
 arrayY = []
 
@@ -96,7 +97,7 @@ while(True):
 
 
     #Print the trajectory
-    Draw(velocity, angle, gravity, initX, initY, drawn, arrayX, arrayY)
+    Draw(velocity, angle, gravity, initX, initY, drawn, arrayX, arrayY, mass, viscosity)
 
     #Command the user inputs
     original_input = input()
@@ -115,7 +116,9 @@ while(True):
             elif(user_input[1] == "angle"):
                 angle = float(user_input[2]) 
             elif(user_input[1] == "gravity"):
-                gravity = -float(user_input[2]) 
+                gravity = -float(user_input[2])
+            elif(user_input[1] == "mass"):
+                mass = -float(user_input[2]) 
             elif(user_input[1] == "viscosity"):
                 viscosity = float(user_input[2])
             else:
